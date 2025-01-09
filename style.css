@@ -1,1 +1,11 @@
+.Mavuika{
+    width: 100px;
+    display: inline-flex;
+}
 
+.Mavuika img{
+    margin: auto 5px;
+    float: left;
+    width: 150px;
+    height: 150px;
+}
