@@ -1,29 +1,35 @@
-const image = document.querySelector('.Mavuika');
-let isDragging = false;
-let offsetX, offsetY;
+// script.js
+let draggedElement = null;
 
-image.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  offsetX = e.offsetX; 
-  offsetY = e.offsetY;
-  image.style.cursor = 'grabbing'; 
-});
+// Function to start dragging
+function startDrag(event) {
+    draggedElement = event.target;
+    draggedElement.style.position = 'absolute';
+    draggedElement.style.zIndex = '1000';
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+}
 
-document.addEventListener('mousemove', (e) => {
-  if (isDragging) {
-    const container = document.querySelector('.container');
-    const rect = container.getBoundingClientRect();
-    
-    // Restrict movement to within the container
-    const x = Math.min(rect.width - image.offsetWidth, Math.max(0, e.clientX - rect.left - offsetX));
-    const y = Math.min(rect.height - image.offsetHeight, Math.max(0, e.clientY - rect.top - offsetY));
+// Function to handle dragging
+function onDrag(event) {
+    if (!draggedElement) return;
 
-    image.style.left = `${x}px`;
-    image.style.top = `${y}px`;
-  }
-});
+    // Adjust position based on mouse movement
+    draggedElement.style.left = event.pageX - draggedElement.offsetWidth / 2 + 'px';
+    draggedElement.style.top = event.pageY - draggedElement.offsetHeight / 2 + 'px';
+}
 
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  image.style.cursor = 'grab'; 
+// Function to stop dragging
+function stopDrag() {
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopDrag);
+    draggedElement = null;
+}
+
+// Attach event listener to the image
+document.addEventListener('DOMContentLoaded', () => {
+    const mavuikaImage = document.querySelector('.Mavuika.img');
+    if (mavuikaImage) {
+        mavuikaImage.addEventListener('mousedown', startDrag);
+    }
 });
