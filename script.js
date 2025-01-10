@@ -4,9 +4,9 @@ let offsetX, offsetY;
 
 image.addEventListener('mousedown', (e) => {
   isDragging = true;
-  offsetX = e.offsetX; // Capture initial mouse position
+  offsetX = e.offsetX; 
   offsetY = e.offsetY;
-  image.style.cursor = 'grabbing'; // Visual cue for dragging
+  image.style.cursor = 'grabbing'; 
 });
 
 document.addEventListener('mousemove', (e) => {
@@ -25,5 +25,5 @@ document.addEventListener('mousemove', (e) => {
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
-  image.style.cursor = 'grab'; // Reset cursor
+  image.style.cursor = 'grab'; 
 });
