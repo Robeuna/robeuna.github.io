@@ -1,30 +1,29 @@
-const img = document.getElementById('Mavuika');
+const image = document.querySelector('.Mavuika');
+let isDragging = false;
+let offsetX, offsetY;
 
-    let isDragging = false;
+image.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  offsetX = e.offsetX; // Capture initial mouse position
+  offsetY = e.offsetY;
+  image.style.cursor = 'grabbing'; // Visual cue for dragging
+});
 
-    // Store the initial position of the mouse and image
-    let offsetX, offsetY;
+document.addEventListener('mousemove', (e) => {
+  if (isDragging) {
+    const container = document.querySelector('.container');
+    const rect = container.getBoundingClientRect();
+    
+    // Restrict movement to within the container
+    const x = Math.min(rect.width - image.offsetWidth, Math.max(0, e.clientX - rect.left - offsetX));
+    const y = Math.min(rect.height - image.offsetHeight, Math.max(0, e.clientY - rect.top - offsetY));
 
-    // Mouse down event
-    img.addEventListener('mousedown', (event) => {
-      isDragging = true;
-      img.style.cursor = 'grabbing';
+    image.style.left = `${x}px`;
+    image.style.top = `${y}px`;
+  }
+});
 
-      // Calculate offset between mouse and image position
-      offsetX = event.clientX - img.offsetLeft;
-      offsetY = event.clientY - img.offsetTop;
-    });
-
-    // Mouse move event
-    window.addEventListener('mousemove', (event) => {
-      if (isDragging) {
-        // Move the image to the new position
-        img.style.left = `${event.clientX - offsetX}px`;
-        img.style.top = `${event.clientY - offsetY}px`;
-      }
-
-    // Mouse up event
-    window.addEventListener('mouseup', () => {
-      isDragging = false;
-      img.style.cursor = 'grab';
-    });
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  image.style.cursor = 'grab'; // Reset cursor
+});
