@@ -22,3 +22,9 @@ const img = document.getElementById('Mavuika');
         img.style.left = `${event.clientX - offsetX}px`;
         img.style.top = `${event.clientY - offsetY}px`;
       }
+
+    // Mouse up event
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      img.style.cursor = 'grab';
+    });
